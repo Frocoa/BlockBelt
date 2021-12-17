@@ -1,0 +1,6 @@
+name: BlockBelt
+version: '${project.version}'
+main: com.joaquin.blockbelt.BlockBelt
+api-version: 1.18
+authors: [ Frocoa ]
+description: A plugin for builders that allows you to change between blocks
