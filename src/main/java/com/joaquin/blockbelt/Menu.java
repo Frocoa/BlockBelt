@@ -5,8 +5,10 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 
+import javax.swing.text.html.ImageView;
 import java.util.List;
 import java.util.Objects;
 
@@ -16,6 +18,7 @@ public class Menu {
     List<String> materialsList;
 
     public Menu(List<String> materialsList) {
+
 
         Inventory menu = Bukkit.createInventory(null, 54, ChatColor.GREEN + "Block Belt");
 
@@ -29,8 +32,8 @@ public class Menu {
         this.materialsList = materialsList;
     }
 
-    public void applyMenu(Player player) {
-        player.openInventory(this.menuGUI);
+    public InventoryView applyMenu(Player player) {
+        return player.openInventory(this.menuGUI);
     }
 
     @Override

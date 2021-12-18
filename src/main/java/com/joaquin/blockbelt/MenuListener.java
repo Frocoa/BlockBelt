@@ -13,7 +13,7 @@ public class MenuListener implements Listener {
         Player player = (Player) event.getWhoClicked();
         if (player.getGameMode() != GameMode.CREATIVE) return;
 
-        if (event.getView().getTitle().contains("Block Belt")) {
+        if (BlockBelt.menuCache.contains(event.getView())) {
             event.setCancelled(true);
             if (event.getCurrentItem() == null) return;
             player.getInventory().setItemInMainHand(event.getCurrentItem());

@@ -1,11 +1,5 @@
 package com.joaquin.blockbelt;
 
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
 import java.util.List;
@@ -15,7 +9,19 @@ import java.util.List;
  */
 public class MenuFlyweightBuilder {
 
-    private HashMap<Integer, Menu> cache = new HashMap<>();
+    private final HashMap<Integer, Menu> cache = new HashMap<>();
+    private static MenuFlyweightBuilder uniqueInstance;
+
+    private MenuFlyweightBuilder() {
+
+    }
+
+    public static MenuFlyweightBuilder getInstance() {
+        if (uniqueInstance == null) {
+            uniqueInstance = new MenuFlyweightBuilder();
+        }
+        return uniqueInstance;
+    }
 
     private Menu createMenu(Menu menu) {
         int hashCode = menu.hashCode();

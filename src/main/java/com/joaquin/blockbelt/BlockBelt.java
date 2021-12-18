@@ -6,16 +6,16 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerSwapHandItemsEvent;
+import org.bukkit.inventory.InventoryView;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 
 public final class BlockBelt extends JavaPlugin implements Listener {
 
     private final HashMap<String, String> materialHash = new HashMap<>();
+    static public final Set<InventoryView> menuCache = new HashSet<>();
 
     @Override
     public void onEnable() {
@@ -59,8 +59,8 @@ public final class BlockBelt extends JavaPlugin implements Listener {
             return;
         }
         List<String> list = this.getConfig().getStringList(beltString);
-        MenuFlyweightBuilder menuBuilder = new MenuFlyweightBuilder();
+        MenuFlyweightBuilder menuBuilder = MenuFlyweightBuilder.getInstance();
         Menu menu = menuBuilder.createMenu(list);
-        menu.applyMenu(player);
+        menuCache.add(menu.applyMenu(player));
     }
 }
