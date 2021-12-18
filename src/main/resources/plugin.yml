@@ -7,3 +7,4 @@ description: A plugin for builders that allows you to change between blocks
 commands:
   blockbelt:
     description: Allows you to toggle the block belt
+    aliases: [bbelt]
