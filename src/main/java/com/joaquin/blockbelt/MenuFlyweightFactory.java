@@ -7,18 +7,18 @@ import java.util.List;
 /**
  * Class that represents the Belt
  */
-public class MenuFlyweightBuilder {
+public class MenuFlyweightFactory {
 
     private final HashMap<Integer, Menu> cache = new HashMap<>();
-    private static MenuFlyweightBuilder uniqueInstance;
+    private static MenuFlyweightFactory uniqueInstance;
 
-    private MenuFlyweightBuilder() {
+    private MenuFlyweightFactory() {
 
     }
 
-    public static MenuFlyweightBuilder getInstance() {
+    public static MenuFlyweightFactory getInstance() {
         if (uniqueInstance == null) {
-            uniqueInstance = new MenuFlyweightBuilder();
+            uniqueInstance = new MenuFlyweightFactory();
         }
         return uniqueInstance;
     }

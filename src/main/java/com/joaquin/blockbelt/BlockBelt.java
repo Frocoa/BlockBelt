@@ -30,7 +30,7 @@ public final class BlockBelt extends JavaPlugin implements Listener {
         saveDefaultConfig();
 
         Bukkit.getPluginManager().registerEvents(this, this);
-        Bukkit.getPluginManager().registerEvents(new MenuListener(this), this);
+        Bukkit.getPluginManager().registerEvents(new MenuListener(), this);
 
         Objects.requireNonNull(getCommand("blockbelt")).setExecutor(new BeltToggleCommand(this));
 
@@ -64,7 +64,7 @@ public final class BlockBelt extends JavaPlugin implements Listener {
             return;
         }
         List<String> list = this.getConfig().getStringList(beltString);
-        MenuFlyweightBuilder menuBuilder = MenuFlyweightBuilder.getInstance();
+        MenuFlyweightFactory menuBuilder = MenuFlyweightFactory.getInstance();
         Menu menu = menuBuilder.createMenu(list);
         menuCache.add(menu.applyMenu(player));
     }

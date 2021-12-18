@@ -13,8 +13,8 @@ import java.util.Objects;
 
 public class Menu {
 
-    Inventory menuGUI;
-    List<String> materialsList;
+    private final Inventory menuGUI;
+    private  final List<String> materialsList;
 
     public Menu(List<String> materialsList) {
 

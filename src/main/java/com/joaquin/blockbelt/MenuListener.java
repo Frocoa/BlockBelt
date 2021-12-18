@@ -8,12 +8,6 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 
 public class MenuListener implements Listener {
 
-    private final BlockBelt controller;
-
-    public MenuListener(BlockBelt controller) {
-        this.controller = controller;
-    }
-
     @EventHandler
     public void onClick(InventoryClickEvent event) {
         Player player = (Player) event.getWhoClicked();
