@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 
 public final class BlockBelt extends JavaPlugin implements Listener {
 
-    private final HashMap<String, String> materialHash = new HashMap<>();
+    private HashMap<String, String> materialHash = new HashMap<>();
     private final HashSet<UUID> enabledPlayers = new HashSet<>();
     static public final Set<InventoryView> menuCache = new HashSet<>();
 
@@ -28,19 +28,13 @@ public final class BlockBelt extends JavaPlugin implements Listener {
                 pluginDescriptionFile.getVersion() + " enabled!");
 
         saveDefaultConfig();
+        createMaterialHash();
 
         Bukkit.getPluginManager().registerEvents(this, this);
         Bukkit.getPluginManager().registerEvents(new MenuListener(), this);
 
         Objects.requireNonNull(getCommand("blockbelt")).setExecutor(new BeltToggleCommand(this));
-
-        Set<String> keys = this.getConfig().getKeys(false);
-        for(String key: keys) {
-            List<String> list = this.getConfig().getStringList(key);
-            for(String materialString: list) {
-                materialHash.put(materialString, key);
-            }
-        }
+        Objects.requireNonNull(getCommand("blockbeltreload")).setExecutor(new ReloadCommand(this));
     }
 
     @Override
@@ -79,5 +73,17 @@ public final class BlockBelt extends JavaPlugin implements Listener {
 
     public void removeEnabledPlayer(UUID uuid) {
         this.enabledPlayers.remove(uuid);
+    }
+
+    public void createMaterialHash() {
+        HashMap<String, String> newMaterialMap = new HashMap<>();
+        Set<String> keys = this.getConfig().getKeys(false);
+        for(String key: keys) {
+            List<String> list = this.getConfig().getStringList(key);
+            for(String materialString: list) {
+                newMaterialMap.put(materialString, key);
+            }
+        }
+        this.materialHash = newMaterialMap;
     }
 }

@@ -8,3 +8,7 @@ commands:
   blockbelt:
     description: Allows you to toggle the block belt
     aliases: [bbelt]
+
+  blockbeltreload:
+    description: Reloads the plugin config
+    aliases: [bbreload]
