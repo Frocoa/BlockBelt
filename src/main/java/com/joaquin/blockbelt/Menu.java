@@ -1,7 +1,6 @@
 package com.joaquin.blockbelt;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -19,7 +18,7 @@ public class Menu {
     public Menu(List<String> materialsList) {
 
 
-        Inventory menu = Bukkit.createInventory(null, 54, ChatColor.GREEN + "Block Belt");
+        Inventory menu = Bukkit.createInventory(null, 54,"Block Belt");
 
         // ITEM STACK
         int index = 0;

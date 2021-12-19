@@ -27,16 +27,21 @@ public class BeltToggleCommand implements CommandExecutor {
             return false;
         }
 
+        if(!sender.hasPermission("blockbelt.use"))
+            return false;
+
         Player player = (Player) sender;
         UUID uuid = player.getUniqueId();
 
         if(controller.getEnabledPlayers().contains(uuid)) {
            controller.removeEnabledPlayer(uuid);
-            player.sendMessage("[BlockBelt] Your block belt has been disabled!");
+           String message = ColorUtility.colorFormat("&f[&6Block Belt&f] &7Enabled.");
+           player.sendMessage(message);
         }
         else {
             controller.addEnabledPlayer(uuid);
-            player.sendMessage("[BlockBelt] Your block belt has been enabled!");
+            String message = ColorUtility.colorFormat("&f[&6Block Belt&f] &aDisabled.");
+            player.sendMessage(message);
         }
         return true;
     }

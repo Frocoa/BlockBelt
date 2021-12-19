@@ -17,7 +17,7 @@ import java.util.logging.Logger;
 public final class BlockBelt extends JavaPlugin implements Listener {
 
     private HashMap<String, String> materialHash = new HashMap<>();
-    private final HashSet<UUID> enabledPlayers = new HashSet<>();
+    private final HashSet<UUID> disabledPlayers = new HashSet<>();
     static public final Set<InventoryView> menuCache = new HashSet<>();
 
     @Override
@@ -46,7 +46,7 @@ public final class BlockBelt extends JavaPlugin implements Listener {
     public void onPlayerSwapItem(PlayerSwapHandItemsEvent event) {
         Player player = event.getPlayer();
         if (player.isSneaking() || player.getGameMode() != GameMode.CREATIVE ||
-                !enabledPlayers.contains(player.getUniqueId())) return;
+                disabledPlayers.contains(player.getUniqueId()) || !player.hasPermission("blockbelt.use")) return;
 
         event.setCancelled(true);
 
@@ -64,15 +64,15 @@ public final class BlockBelt extends JavaPlugin implements Listener {
     }
 
     public HashSet<UUID> getEnabledPlayers() {
-        return this.enabledPlayers;
+        return this.disabledPlayers;
     }
 
     public void addEnabledPlayer(UUID uuid) {
-        this.enabledPlayers.add(uuid);
+        this.disabledPlayers.add(uuid);
     }
 
     public void removeEnabledPlayer(UUID uuid) {
-        this.enabledPlayers.remove(uuid);
+        this.disabledPlayers.remove(uuid);
     }
 
     public void createMaterialHash() {

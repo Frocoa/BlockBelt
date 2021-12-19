@@ -22,7 +22,8 @@ public class ReloadCommand implements CommandExecutor {
         if (sender instanceof Player) {
             if (sender.hasPermission("blockbelt.reload")) {
                 reloadPluginConfig();
-                sender.sendMessage("[BlockBelt] Config reloaded!");
+                String message = ColorUtility.colorFormat("&f[&6Block Belt&f] &aConfig file reloaded.");
+                sender.sendMessage(message);
                 return true;
             }
         }
