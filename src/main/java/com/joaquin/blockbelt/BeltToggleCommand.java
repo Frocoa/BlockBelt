@@ -5,7 +5,6 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import javax.annotation.Nonnull;
 import java.util.UUID;
 import java.util.logging.Logger;
 
@@ -20,8 +19,7 @@ public class BeltToggleCommand implements CommandExecutor {
     }
 
     @Override
-    public boolean onCommand(@Nonnull CommandSender sender, @Nonnull Command command,
-                             @Nonnull String label, @Nonnull String[] args) {
+    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if(!(sender instanceof Player)) {
             logger.warning("This command is meant only for players");
             return false;
@@ -35,12 +33,12 @@ public class BeltToggleCommand implements CommandExecutor {
 
         if(controller.getEnabledPlayers().contains(uuid)) {
            controller.removeEnabledPlayer(uuid);
-           String message = ColorUtility.colorFormat("&f[&6Block Belt&f] &7Enabled.");
+           String message = ColorUtility.colorFormat("&f[&6Block Belt&f] &aEnabled.");
            player.sendMessage(message);
         }
         else {
             controller.addEnabledPlayer(uuid);
-            String message = ColorUtility.colorFormat("&f[&6Block Belt&f] &aDisabled.");
+            String message = ColorUtility.colorFormat("&f[&6Block Belt&f] &7Disabled.");
             player.sendMessage(message);
         }
         return true;
