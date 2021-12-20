@@ -1,11 +1,10 @@
 package com.joaquin.blockbelt;
 
+import co.aikar.commands.BukkitCommandManager;
+import com.joaquin.blockbelt.commands.BlockBeltCommand;
+import com.joaquin.blockbelt.events.PlayerSwapItemsListener;
+import com.joaquin.blockbelt.menu.MenuListener;
 import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
-import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -14,11 +13,13 @@ import java.util.*;
 import java.util.logging.Logger;
 
 
-public final class BlockBelt extends JavaPlugin implements Listener {
+public final class BlockBelt extends JavaPlugin {
 
     private HashMap<String, String> materialHash = new HashMap<>();
     private final HashSet<UUID> disabledPlayers = new HashSet<>();
-    static public final Set<InventoryView> menuCache = new HashSet<>();
+    public static final Set<InventoryView> menuCache = new HashSet<>();
+
+    BukkitCommandManager manager;
 
     @Override
     public void onEnable() {
@@ -30,11 +31,12 @@ public final class BlockBelt extends JavaPlugin implements Listener {
         saveDefaultConfig();
         createMaterialHash();
 
-        Bukkit.getPluginManager().registerEvents(this, this);
-        Bukkit.getPluginManager().registerEvents(new MenuListener(), this);
-
-        Objects.requireNonNull(getCommand("blockbelt")).setExecutor(new BeltToggleCommand(this));
-        Objects.requireNonNull(getCommand("blockbeltreload")).setExecutor(new ReloadCommand(this));
+        /* Using a command framework makes managing commands simpler, my personal choice is ACF
+        * https://github.com/aikar/commands/wiki/Using-ACF
+        */
+        manager = new BukkitCommandManager(this);
+        registerCommands();
+        registerEvents();
     }
 
     @Override
@@ -42,36 +44,27 @@ public final class BlockBelt extends JavaPlugin implements Listener {
         // Plugin shutdown logic
     }
 
-    @EventHandler
-    public void onPlayerSwapItem(PlayerSwapHandItemsEvent event) {
-        Player player = event.getPlayer();
-        if (player.isSneaking() || player.getGameMode() != GameMode.CREATIVE ||
-                disabledPlayers.contains(player.getUniqueId()) || !player.hasPermission("blockbelt.use")) return;
-
-        event.setCancelled(true);
-
-        String itemMaterial = player.getInventory().getItemInMainHand().getType().toString();
-        String beltString = materialHash.get(itemMaterial);
-
-        if (beltString == null) {
-            player.sendMessage("This item is not part of any belt");
-            return;
-        }
-        List<String> list = this.getConfig().getStringList(beltString);
-        MenuFlyweightFactory menuBuilder = MenuFlyweightFactory.getInstance();
-        Menu menu = menuBuilder.createMenu(list);
-        menuCache.add(menu.applyMenu(player));
+    private void registerEvents() {
+        // It's better to have listeners in a separate class, for organization.
+        Bukkit.getPluginManager().registerEvents(new PlayerSwapItemsListener(this), this);
+        Bukkit.getPluginManager().registerEvents(new MenuListener(), this);
     }
 
-    public HashSet<UUID> getEnabledPlayers() {
+    private void registerCommands() {
+        manager.registerCommand(new BlockBeltCommand(this, getLogger()));
+    }
+
+    // These three methods were named "...EnabledPlayers" but I changed it to "DisabledPlayers" because
+    // it makes more sense.
+    public HashSet<UUID> getDisabledPlayers() {
         return this.disabledPlayers;
     }
 
-    public void addEnabledPlayer(UUID uuid) {
+    public void addDisabledPlayer(UUID uuid) {
         this.disabledPlayers.add(uuid);
     }
 
-    public void removeEnabledPlayer(UUID uuid) {
+    public void removeDisabledPlayer(UUID uuid) {
         this.disabledPlayers.remove(uuid);
     }
 
@@ -85,5 +78,9 @@ public final class BlockBelt extends JavaPlugin implements Listener {
             }
         }
         this.materialHash = newMaterialMap;
+    }
+
+    public HashMap<String, String> getMaterialHash() {
+        return this.materialHash;
     }
 }
