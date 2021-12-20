@@ -1,5 +1,6 @@
 # BlockBelt
 A simple plugin built for improving the quality of life for builders.
+[SpigotMC](https://www.spigotmc.org/resources/block-belt.98481/)
 
 ## Features
 * Group based block organization, with a simple one-click interface.
