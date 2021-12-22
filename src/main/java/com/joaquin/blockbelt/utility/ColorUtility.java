@@ -1,10 +1,10 @@
-package com.joaquin.blockbelt;
+package com.joaquin.blockbelt.utility;
 
 import org.bukkit.ChatColor;
 
 public class ColorUtility {
 
-    static public String colorFormat(String message) {
+    public static String colorFormat(String message) {
         return ChatColor.translateAlternateColorCodes('&', message);
     }
 }

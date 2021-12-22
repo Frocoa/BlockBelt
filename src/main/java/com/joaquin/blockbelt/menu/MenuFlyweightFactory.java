@@ -1,4 +1,4 @@
-package com.joaquin.blockbelt;
+package com.joaquin.blockbelt.menu;
 
 
 import java.util.HashMap;

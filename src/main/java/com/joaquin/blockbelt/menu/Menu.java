@@ -1,4 +1,4 @@
-package com.joaquin.blockbelt;
+package com.joaquin.blockbelt.menu;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;

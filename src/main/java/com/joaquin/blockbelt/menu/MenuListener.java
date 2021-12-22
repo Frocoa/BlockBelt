@@ -1,5 +1,6 @@
-package com.joaquin.blockbelt;
+package com.joaquin.blockbelt.menu;
 
+import com.joaquin.blockbelt.BlockBelt;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

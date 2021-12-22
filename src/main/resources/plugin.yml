@@ -3,12 +3,4 @@ version: '${project.version}'
 main: com.joaquin.blockbelt.BlockBelt
 api-version: 1.17
 authors: [ Frocoa ]
-description: A plugin for builders that allows you to change between blocks
-commands:
-  blockbelt:
-    description: Allows you to toggle the block belt
-    aliases: [bbelt]
-
-  blockbeltreload:
-    description: Reloads the plugin config
-    aliases: [bbreload]
+description: A plugin for builders that allows you to easily change between block groups.
