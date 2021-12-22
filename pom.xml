@@ -46,11 +46,11 @@
                             <relocations>
                                 <relocation>
                                     <pattern>co.aikar.commands</pattern>
-                                    <shadedPattern>com.joaquin.blockbelt.acf</shadedPattern> <!-- Replace this -->
+                                    <shadedPattern>com.joaquin.blockbelt.acf</shadedPattern>
                                 </relocation>
                                 <relocation>
                                     <pattern>co.aikar.locales</pattern>
-                                    <shadedPattern>com.joaquin.blockbelt.locales</shadedPattern> <!-- Replace this -->
+                                    <shadedPattern>com.joaquin.blockbelt.locales</shadedPattern>
                                 </relocation>
                             </relocations>
                         </configuration>
