@@ -70,9 +70,10 @@ public final class BlockBelt extends JavaPlugin {
 
     public void createMaterialHash() {
         HashMap<String, String> newMaterialMap = new HashMap<>();
-        Set<String> keys = this.getConfig().getKeys(false);
+        Set<String> keys = this.getConfig().getConfigurationSection("BlockBelts").getKeys(false);
         for(String key: keys) {
-            List<String> list = this.getConfig().getStringList(key);
+            List<String> list = getConfig().getStringList("BlockBelts."+ key + ".Materials");
+            //List<String> list = this.getConfig().getStringList(key);
             for(String materialString: list) {
                 newMaterialMap.put(materialString, key);
             }

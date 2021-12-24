@@ -34,7 +34,7 @@ public class PlayerSwapItemsListener implements Listener {
             player.sendMessage("This item is not part of any belt");
             return;
         }
-        List<String> list = controller.getConfig().getStringList(beltString);
+        List<String> list = controller.getConfig().getStringList("BlockBelts." + beltString + ".Materials");
         MenuFlyweightFactory menuBuilder = MenuFlyweightFactory.getInstance();
         Menu menu = menuBuilder.createMenu(list);
         BlockBelt.menuCache.add(menu.applyMenu(player));
