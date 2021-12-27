@@ -110,7 +110,9 @@ public final class BlockBelt extends JavaPlugin {
     }
 
     private void updateEnabledByDefault() {
-        this.enabledByDefault = getConfig().getBoolean("Settings.Enabled by Default");
+        this.enabledByDefault = getConfig().getBoolean(
+                "Settings.Enabled by Default"
+        );
     }
     
     public boolean getQuickBelt() {
@@ -118,7 +120,9 @@ public final class BlockBelt extends JavaPlugin {
     }
     
     private void updateQuickBelt(){
-        this.quickBelt = getConfig().getBoolean("Settings.Quick Belt by Default");
+        this.quickBelt = getConfig().getBoolean(
+                "Settings.Hotkey F instead of Shift+F"
+        );
     }
 
     public void reloadPluginConfig() {

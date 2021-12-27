@@ -30,12 +30,11 @@ public class ConfigMigrator {
 
         for (String key : keys) {
             List<String> materialList = config.getStringList(key);
-            for (String material: materialList) System.out.println(material);
             belts.put(key, materialList);
             config.set(key, null);
         }
         config.set("Config Version", 1.0);
-        config.set("Settings.Quick Belt by Default", true);
+        config.set("Settings.Hotkey F instead of Shift+F", true);
         config.set("Settings.Enabled by Default", true);
         for (String key: keys) {
             config.set("BlockBelts." + key + ".Materials", belts.get(key));

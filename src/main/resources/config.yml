@@ -7,7 +7,7 @@ Settings:
   # true: Use the F key to open a belt
   # false: Use Shift + F to open a belt
   # Each player can change this personally using /bb hotkey
-  Quick Belt by Default: true
+  Hotkey F instead of Shift+F: true
 
   # Setting to choose if player will have the
   # belts enabled by default when the server turns on
