@@ -20,7 +20,7 @@ public final class BlockBelt extends JavaPlugin {
     private HashMap<String, String> materialHash = new HashMap<>();
     private final HashSet<UUID> toggledPlayers = new HashSet<>();
     private final HashSet<UUID> hotkeyToggled = new HashSet<>();
-    public static final Set<InventoryView> menuCache = new HashSet<>();
+    public final Set<InventoryView> menuCache = new HashSet<>();
     private boolean enabledByDefault;
     private boolean quickBelt;
 
@@ -56,7 +56,7 @@ public final class BlockBelt extends JavaPlugin {
     private void registerEvents() {
         // It's better to have listeners in a separate class, for organization.
         Bukkit.getPluginManager().registerEvents(new PlayerSwapItemsListener(this), this);
-        Bukkit.getPluginManager().registerEvents(new MenuListener(), this);
+        Bukkit.getPluginManager().registerEvents(new MenuListener(this), this);
     }
 
     private void registerCommands() {
@@ -135,4 +135,13 @@ public final class BlockBelt extends JavaPlugin {
         this.hotkeyToggled.clear();
 
     }
+
+    public void menuCacheAdd(InventoryView menu) {
+        this.menuCache.add(menu);
+    }
+
+    public boolean menuCacheContains(InventoryView menu) {
+        return menuCache.contains(menu);
+    }
+
 }

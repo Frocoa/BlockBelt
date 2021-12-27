@@ -13,7 +13,7 @@ import java.util.List;
 
 public class PlayerSwapItemsListener implements Listener {
 
-    BlockBelt controller;
+    private final BlockBelt controller;
 
     public PlayerSwapItemsListener(BlockBelt controller) {
         this.controller = controller;
@@ -38,7 +38,7 @@ public class PlayerSwapItemsListener implements Listener {
         List<String> list = controller.getConfig().getStringList("BlockBelts." + beltString + ".Materials");
         MenuFlyweightFactory menuBuilder = MenuFlyweightFactory.getInstance();
         Menu menu = menuBuilder.createMenu(list);
-        BlockBelt.menuCache.add(menu.applyMenu(player));
+        controller.menuCacheAdd(menu.applyMenu(player));
     }
 
     private boolean canPlayerUseBelts(Player player) {

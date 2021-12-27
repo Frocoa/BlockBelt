@@ -14,12 +14,6 @@ public class ConfigMigrator {
         }
     }
 
-    /*
-    static private String getConfigVersion(FileConfiguration config) {
-        return config.getString("Config Version");
-    }
-    */
-
     static private void migrateConfigV0ToV1(BlockBelt controller) {
 
         controller.getLogger().info("Configuration version 0.0 detected, updating to version 1.0");

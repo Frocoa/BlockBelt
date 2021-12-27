@@ -7,7 +7,6 @@ import com.joaquin.blockbelt.utility.ColorUtility;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.util.UUID;
 import java.util.logging.Logger;
 
 @CommandAlias("bb|bbelt|blockbelt")
