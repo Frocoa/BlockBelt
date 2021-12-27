@@ -60,10 +60,6 @@ public final class BlockBelt extends JavaPlugin {
         manager.registerCommand(new BlockBeltCommand(this, getLogger()));
     }
 
-    public HashSet<UUID> getToggledPlayers() {
-        return this.toggledPlayers;
-    }
-
     public void addToggledPlayer(Player player) {
         this.toggledPlayers.add(player.getUniqueId());
     }
