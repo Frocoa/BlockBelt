@@ -42,11 +42,12 @@ public class PlayerSwapItemsListener implements Listener {
     }
 
     private boolean canPlayerUseBelts(Player player) {
-        boolean notSneaking = !player.isSneaking();
+        boolean pressingHotKey = player.isSneaking() == controller.hotKeyToggledContains(player) ==
+                controller.getQuickBelt();
         boolean inCreative = player.getGameMode() == GameMode.CREATIVE;
         boolean beltsEnabled = controller.toggledPlayersContains(player) ^ controller.getEnabledByDefault();
         boolean hasPermission = player.hasPermission("blockbelt.use");
 
-        return notSneaking && inCreative && beltsEnabled && hasPermission;
+        return pressingHotKey && inCreative && beltsEnabled && hasPermission;
     }
 }

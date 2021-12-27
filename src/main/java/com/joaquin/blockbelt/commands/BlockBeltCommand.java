@@ -74,6 +74,32 @@ public class BlockBeltCommand extends BaseCommand {
         }
     }
 
+    @Subcommand("hotkey")
+    @CommandPermission("blockbelt.use")
+    @Description("Toggles your hotkey to open belts between F and Shift+F")
+    public void onHotkeyToggle(CommandSender sender) {
+        if(!(sender instanceof Player)) {
+            logger.warning("This command is meant only for players");
+            return;
+        }
+
+        String fKeyMessage = ColorUtility.colorFormat("&f[&6Block Belt&f] &aNow your hotkey is F.");
+        String shiftKeyMessage = ColorUtility.colorFormat("&f[&6Block Belt&f] &aNow your hotkey is Shift+F.");
+
+        Player player = (Player) sender;
+        boolean quickBeltByDefault = controller.getQuickBelt();
+        if(controller.hotKeyToggledContains(player)) {
+            controller.removeHotkeyToggled(player);
+            if (quickBeltByDefault) player.sendMessage(fKeyMessage);
+            else player.sendMessage(shiftKeyMessage);
+        }
+        else {
+            controller.addHotkeyToggled(player);
+            if (quickBeltByDefault) player.sendMessage(shiftKeyMessage);
+            else player.sendMessage(fKeyMessage);
+        }
+    }
+
     @Subcommand("reload")
     @CommandPermission("blockbelt.reload")
     @Description("Reloads the plugin config.")

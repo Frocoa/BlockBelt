@@ -18,8 +18,10 @@ public final class BlockBelt extends JavaPlugin {
 
     private HashMap<String, String> materialHash = new HashMap<>();
     private final HashSet<UUID> toggledPlayers = new HashSet<>();
+    private final HashSet<UUID> hotkeyToggled = new HashSet<>();
     public static final Set<InventoryView> menuCache = new HashSet<>();
     private boolean enabledByDefault;
+    private boolean quickBelt;
 
     BukkitCommandManager manager;
 
@@ -33,6 +35,7 @@ public final class BlockBelt extends JavaPlugin {
         saveDefaultConfig();
         createMaterialHash();
         updateEnabledByDefault();
+        updateQuickBelt();
 
         /* Using a command framework makes managing commands simpler, my personal choice is ACF
         * https://github.com/aikar/commands/wiki/Using-ACF
@@ -69,9 +72,28 @@ public final class BlockBelt extends JavaPlugin {
         this.toggledPlayers.remove(player.getUniqueId());
     }
 
-    public void createMaterialHash() {
+    public boolean toggledPlayersContains(Player player) {
+        return this.toggledPlayers.contains(player.getUniqueId());
+    }
+
+    public void addHotkeyToggled(Player player){
+        this.hotkeyToggled.add(player.getUniqueId());
+    }
+
+    public void removeHotkeyToggled(Player player) {
+        this.hotkeyToggled.remove(player.getUniqueId());
+    }
+
+    public boolean hotKeyToggledContains(Player player) {
+        return this.hotkeyToggled.contains(player.getUniqueId());
+    }
+
+    private void createMaterialHash() {
         HashMap<String, String> newMaterialMap = new HashMap<>();
-        Set<String> keys = this.getConfig().getConfigurationSection("BlockBelts").getKeys(false);
+        Set<String> keys = Objects.requireNonNull(
+                this.getConfig().getConfigurationSection("BlockBelts"),
+                        "BlockBelts Section not found in the config")
+                .getKeys(false);
 
         for(String key: keys) {
             List<String> list = getConfig().getStringList("BlockBelts."+ key + ".Materials");
@@ -91,16 +113,23 @@ public final class BlockBelt extends JavaPlugin {
     private void updateEnabledByDefault() {
         this.enabledByDefault = getConfig().getBoolean("Settings.Enabled by Default");
     }
-
-    public void reloadPluginConfig() {
-        this.reloadConfig();
-        this.saveConfig();
-        this.createMaterialHash();
-        this.updateEnabledByDefault();
-        this.toggledPlayers.clear();
+    
+    public boolean getQuickBelt() {
+        return this.quickBelt;
+    }
+    
+    private void updateQuickBelt(){
+        this.quickBelt = getConfig().getBoolean("Settings.Quick Belt by Default");
     }
 
-    public boolean toggledPlayersContains(Player player) {
-        return this.toggledPlayers.contains(player.getUniqueId());
+    public void reloadPluginConfig() {
+        reloadConfig();
+        saveConfig();
+        createMaterialHash();
+        updateEnabledByDefault();
+        this.toggledPlayers.clear();
+        updateQuickBelt();
+        this.hotkeyToggled.clear();
+
     }
 }

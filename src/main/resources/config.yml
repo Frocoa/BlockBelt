@@ -1,22 +1,24 @@
 
-
+# Version of the config, don't change it. If you do, you might
+# lose all your configurations.
+Config Version: 1.0
 
 Settings:
-
-  # Setting to choose how to open the belts
+  # Setting to choose how a player opens the belts by default
   # true: Use the F key to open a belt
   # false: Use Shift + F to open a belt
-  Quick Belt: true
+  # Each player can change this personally using /bb hotkey
+  Quick Belt by Default: true
 
   # Setting to choose if player will have the
   # belts enabled by default when the server turns on
   # true: Enabled by default
   # false: Disabled by default
+  # Each player can change this personally using /bb toggle
   Enabled by Default: true
 
 # Here you can set the belts available for the server
 BlockBelts:
-
   Oak:
     Materials:
       - OAK_WOOD
