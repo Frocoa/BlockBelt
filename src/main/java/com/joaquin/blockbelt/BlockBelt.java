@@ -4,6 +4,7 @@ import co.aikar.commands.BukkitCommandManager;
 import com.joaquin.blockbelt.commands.BlockBeltCommand;
 import com.joaquin.blockbelt.events.PlayerSwapItemsListener;
 import com.joaquin.blockbelt.menu.MenuListener;
+import com.joaquin.blockbelt.utility.ConfigMigrator;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.InventoryView;
@@ -32,7 +33,9 @@ public final class BlockBelt extends JavaPlugin {
         logger.info(pluginDescriptionFile.getName() + " Version: " +
                 pluginDescriptionFile.getVersion() + " enabled!");
 
+        ConfigMigrator.MigrateToLatest(this);
         saveDefaultConfig();
+
         createMaterialHash();
         updateEnabledByDefault();
         updateQuickBelt();
