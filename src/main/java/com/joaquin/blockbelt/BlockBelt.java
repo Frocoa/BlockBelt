@@ -33,8 +33,8 @@ public final class BlockBelt extends JavaPlugin {
         logger.info(pluginDescriptionFile.getName() + " Version: " +
                 pluginDescriptionFile.getVersion() + " enabled!");
 
-        ConfigMigrator.MigrateToLatest(this);
         saveDefaultConfig();
+        ConfigMigrator.MigrateToLatest(this);
 
         createMaterialHash();
         updateEnabledByDefault();
