@@ -14,6 +14,7 @@ A simple plugin built for improving the quality of life for builders.
 * `/blockbelt toggle` - Toggles the BlockBelt on or off
 * `/blockbelt reload` - Reloads the BlockBelt config
 * `/blockbelt help` - Shows the help message
+* `/blockbelt hotkey - Toggles the hotkey to open belts
 
 ### Have bugs?
 * [Report them here](https://github.com/Frocoa/BlockBelt/issues)
