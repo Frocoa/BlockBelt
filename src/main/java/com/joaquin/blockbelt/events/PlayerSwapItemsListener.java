@@ -13,7 +13,7 @@ import java.util.List;
 
 public class PlayerSwapItemsListener implements Listener {
 
-    BlockBelt controller;
+    private final BlockBelt controller;
 
     public PlayerSwapItemsListener(BlockBelt controller) {
         this.controller = controller;
@@ -22,8 +22,8 @@ public class PlayerSwapItemsListener implements Listener {
     @EventHandler
     public void onPlayerSwapItem(PlayerSwapHandItemsEvent event) {
         Player player = event.getPlayer();
-        if (player.isSneaking() || player.getGameMode() != GameMode.CREATIVE ||
-                controller.getDisabledPlayers().contains(player.getUniqueId()) || !player.hasPermission("blockbelt.use")) return;
+        if (!canPlayerUseBelts(player))
+            return;
 
         event.setCancelled(true);
 
@@ -34,9 +34,20 @@ public class PlayerSwapItemsListener implements Listener {
             player.sendMessage("This item is not part of any belt");
             return;
         }
-        List<String> list = controller.getConfig().getStringList(beltString);
+
+        List<String> list = controller.getConfig().getStringList("BlockBelts." + beltString + ".Materials");
         MenuFlyweightFactory menuBuilder = MenuFlyweightFactory.getInstance();
         Menu menu = menuBuilder.createMenu(list);
-        BlockBelt.menuCache.add(menu.applyMenu(player));
+        controller.menuCacheAdd(menu.applyMenu(player));
+    }
+
+    private boolean canPlayerUseBelts(Player player) {
+        boolean pressingHotKey = player.isSneaking() == controller.hotKeyToggledContains(player) ==
+                controller.getQuickBelt();
+        boolean inCreative = player.getGameMode() == GameMode.CREATIVE;
+        boolean beltsEnabled = controller.toggledPlayersContains(player) ^ controller.getEnabledByDefault();
+        boolean hasPermission = player.hasPermission("blockbelt.use");
+
+        return pressingHotKey && inCreative && beltsEnabled && hasPermission;
     }
 }

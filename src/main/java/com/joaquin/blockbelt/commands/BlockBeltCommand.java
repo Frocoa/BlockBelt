@@ -7,7 +7,6 @@ import com.joaquin.blockbelt.utility.ColorUtility;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.util.UUID;
 import java.util.logging.Logger;
 
 @CommandAlias("bb|bbelt|blockbelt")
@@ -57,16 +56,46 @@ public class BlockBeltCommand extends BaseCommand {
             return;
         }
 
-        Player player = (Player) sender;
-        UUID uuid = player.getUniqueId();
+        String enabledMessage = ColorUtility.colorFormat("&f[&6Block Belt&f] &aEnabled.");
+        String disabledMessage = ColorUtility.colorFormat("&f[&6Block Belt&f] &7Disabled.");
 
-        if(controller.getDisabledPlayers().contains(uuid)) {
-            controller.removeDisabledPlayer(uuid);
-            player.sendMessage(ColorUtility.colorFormat("&f[&6Block Belt&f] &aEnabled."));
+        Player player = (Player) sender;
+        boolean enabledByDefault = controller.getEnabledByDefault();
+        if(controller.toggledPlayersContains(player)) {
+            controller.removeToggledPlayer(player);
+            if (enabledByDefault) player.sendMessage(enabledMessage);
+            else player.sendMessage(disabledMessage);
         }
         else {
-            controller.addDisabledPlayer(uuid);
-            player.sendMessage(ColorUtility.colorFormat("&f[&6Block Belt&f] &7Disabled."));
+            controller.addToggledPlayer(player);
+            if (enabledByDefault) player.sendMessage(disabledMessage);
+            else player.sendMessage(enabledMessage);
+        }
+    }
+
+    @Subcommand("hotkey")
+    @CommandPermission("blockbelt.use")
+    @Description("Toggles your hotkey to open belts between F and Shift+F")
+    public void onHotkeyToggle(CommandSender sender) {
+        if(!(sender instanceof Player)) {
+            logger.warning("This command is meant only for players");
+            return;
+        }
+
+        String fKeyMessage = ColorUtility.colorFormat("&f[&6Block Belt&f] &aNow your hotkey is F.");
+        String shiftKeyMessage = ColorUtility.colorFormat("&f[&6Block Belt&f] &aNow your hotkey is Shift+F.");
+
+        Player player = (Player) sender;
+        boolean quickBeltByDefault = controller.getQuickBelt();
+        if(controller.hotKeyToggledContains(player)) {
+            controller.removeHotkeyToggled(player);
+            if (quickBeltByDefault) player.sendMessage(fKeyMessage);
+            else player.sendMessage(shiftKeyMessage);
+        }
+        else {
+            controller.addHotkeyToggled(player);
+            if (quickBeltByDefault) player.sendMessage(shiftKeyMessage);
+            else player.sendMessage(fKeyMessage);
         }
     }
 
@@ -76,18 +105,12 @@ public class BlockBeltCommand extends BaseCommand {
     public void onReload(CommandSender sender) {
 
         if (sender instanceof Player) {
-            reloadPluginConfig();
+            controller.reloadPluginConfig();
             sender.sendMessage(ColorUtility.colorFormat("&f[&6Block Belt&f] &aConfig file reloaded."));
         }
         else {
-            reloadPluginConfig();
+            controller.reloadPluginConfig();
             controller.getLogger().info("Config reloaded!");
         }
-    }
-
-    private void reloadPluginConfig() {
-        controller.reloadConfig();
-        controller.saveConfig();
-        controller.createMaterialHash();
     }
 }
