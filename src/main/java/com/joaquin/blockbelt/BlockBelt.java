@@ -20,7 +20,7 @@ public final class BlockBelt extends JavaPlugin {
     private HashMap<String, String> materialHash = new HashMap<>();
     private final HashSet<UUID> toggledPlayers = new HashSet<>();
     private final HashSet<UUID> hotkeyToggled = new HashSet<>();
-    public final Set<InventoryView> menuCache = new HashSet<>();
+    private final Set<InventoryView> menuCache = new HashSet<>();
     private boolean enabledByDefault;
     private boolean quickBelt;
 
